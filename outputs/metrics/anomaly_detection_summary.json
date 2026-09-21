@@ -1,0 +1,47 @@
+{
+    "model_type": "Isolation Forest (Unsupervised)",
+    "hyperparameters": {
+        "contamination": 0.04,
+        "n_estimators": 150,
+        "random_state": 42
+    },
+    "features_used": [
+        "Air temperature [K]",
+        "Process temperature [K]",
+        "Rotational speed [rpm]",
+        "Torque [Nm]",
+        "Tool wear [min]",
+        "Temp_Difference_K",
+        "Temp_Ratio",
+        "Power_W",
+        "Overstrain_Torque_Wear"
+    ],
+    "features_excluded_for_unsupervised_integrity": [
+        "Machine failure (Target)",
+        "TWF",
+        "HDF",
+        "PWF",
+        "OSF",
+        "RNF (Failure Modes)",
+        "UDI",
+        "Product ID (Identifiers)"
+    ],
+    "detection_results": {
+        "total_observations": 10000,
+        "anomalous_observations": 400,
+        "normal_observations": 9600,
+        "anomaly_rate_percentage": 4.0
+    },
+    "exploratory_overlap_with_machine_failure": {
+        "note": "Isolation Forest was trained without target labels. This cross-tabulation is strictly an exploratory analytical comparison, NOT a supervised validation metric.",
+        "actual_failures_in_dataset": 339,
+        "actual_failures_flagged_as_anomalies": 128,
+        "actual_failures_unflagged_as_normal": 211,
+        "anomalies_operating_normally_no_failure": 272,
+        "exploratory_failure_capture_rate_pct": 37.76,
+        "exploratory_anomaly_precision_pct": 32.0
+    },
+    "conceptual_distinction_interview_guide": {
+        "failure_prediction_vs_anomaly_detection": "Failure prediction is a supervised task mapping operational telemetry to known historic breakdown events. It excels when historic failure labels are plentiful and future failures replicate past mechanisms. Anomaly detection is an unsupervised task isolating statistical outliers in multi-dimensional feature space. It is essential when novel failure modes occur, operating regimes drift, or labels are unrecorded. In real production, they are complementary: Anomaly detection flags unusual drift before an explicit failure pattern forms."
+    }
+}

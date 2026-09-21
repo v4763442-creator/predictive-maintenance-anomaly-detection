@@ -1,0 +1,19 @@
+{
+    "random_state": 42,
+    "test_size": 0.2,
+    "training_set": {
+        "total_samples": 8000,
+        "normal_count": 7729,
+        "failure_count": 271,
+        "failure_rate_pct": 3.39,
+        "imbalance_ratio": "28.52:1"
+    },
+    "test_set": {
+        "total_samples": 2000,
+        "normal_count": 1932,
+        "failure_count": 68,
+        "failure_rate_pct": 3.4,
+        "imbalance_ratio": "28.41:1"
+    },
+    "stratification_rationale": "Because machine failures account for only 3.39% of observations (imbalance ratio 28.5:1), standard random splitting risks severe sampling variance where the test set could have significantly fewer or more failure events. Stratified splitting enforces an identical 3.39% failure incidence in both training and test partitions, ensuring realistic, unbiased evaluation."
+}

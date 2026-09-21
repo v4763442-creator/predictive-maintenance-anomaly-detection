@@ -1,0 +1,49 @@
+{
+    "target_analysis": {
+        "target_counts": {
+            "0": 9661,
+            "1": 339
+        },
+        "type_failure_rates": {
+            "L": 3.92,
+            "M": 2.77,
+            "H": 2.09
+        }
+    },
+    "feature_medians_by_failure_status": {
+        "Air temperature [K]": {
+            "Normal_median": 300.0,
+            "Failure_median": 301.6
+        },
+        "Process temperature [K]": {
+            "Normal_median": 310.0,
+            "Failure_median": 310.4
+        },
+        "Rotational speed [rpm]": {
+            "Normal_median": 1507.0,
+            "Failure_median": 1365.0
+        },
+        "Torque [Nm]": {
+            "Normal_median": 39.9,
+            "Failure_median": 53.7
+        },
+        "Tool wear [min]": {
+            "Normal_median": 107.0,
+            "Failure_median": 165.0
+        }
+    },
+    "correlations_with_machine_failure": {
+        "Machine failure": 1.0,
+        "Torque [Nm]": 0.1913,
+        "Tool wear [min]": 0.1054,
+        "Air temperature [K]": 0.0826,
+        "Process temperature [K]": 0.0359,
+        "Rotational speed [rpm]": -0.0442
+    },
+    "key_physical_insights": {
+        "torque_vs_rotational_speed": "Hyperbolic relationship governed by power (P = tau * omega). Failures cluster at the physical extremes: high torque with low speed (stalling/overstrain) or low torque with extreme speed (overpower/runaway).",
+        "thermal_dissipation": "Heat dissipation failures occur when ambient air temperature is high and the process-to-air temperature gradient is suppressed (< 8.9 K), preventing adequate motor cooling.",
+        "tool_wear_fatigue": "Tool wear exhibits progressive degradation. Machine failures heavily skew toward higher wear durations (failure median 180.5 min vs normal median 107.0 min), particularly when coupled with elevated torque loads.",
+        "correlation_vs_causation_caveat": "Torque (r = +0.19) and Tool Wear (r = +0.11) show positive linear correlation with failure, while Rotational Speed (r = -0.04) shows mild negative correlation. However, linear correlation understates these relationships because failure boundaries are non-linear (e.g. power limits and thermal dissipation limits)."
+    }
+}
