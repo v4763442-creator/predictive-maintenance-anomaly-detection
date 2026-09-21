@@ -7,7 +7,7 @@
 [![Pytest](https://img.shields.io/badge/Pytest-9.1-yellow.svg)](https://docs.pytest.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-A portfolio-quality machine learning system built for **Data & AI Consultant, Data Analytics, and Senior ML** roles. Designed to monitor industrial milling equipment, predict catastrophic machine breakdowns before they occur, and detect subtle operational sensor drift using a dual-layer supervised/unsupervised machine learning architecture.
+A portfolio-quality machine learning system built for **Data Science, Data Analytics, and ML** roles. Designed to monitor industrial milling equipment, predict catastrophic machine breakdowns before they occur, and detect subtle operational sensor drift using a dual-layer supervised/unsupervised machine learning architecture.
 
 Every metric, figure, and model result in this repository is dynamically derived from executing the complete pipeline against the verified **AI4I 2020 Predictive Maintenance Dataset**.
 
@@ -390,7 +390,7 @@ When translating this project to a live manufacturing facility:
 
 ---
 
-## 21. Interview Defense & Technical Rationale Matrix
+## 21.Technical Rationale Matrix
 
 Use this matrix to explain and defend every major technical design decision:
 
