@@ -12,6 +12,14 @@ An end-to-end machine learning system for predictive maintenance and anomaly det
 Every metric, figure, and model result in this repository is dynamically derived from executing the complete pipeline against the verified **AI4I 2020 Predictive Maintenance Dataset**.
 
 ---
+## 🚀 Live Demo
+
+👉 **[Try the Predictive Maintenance & Anomaly Detection System](https://predictive-maintenance-anomaly-detection-og9xcotslxt5flxhghoqu.streamlit.app/)**
+
+Enter machine operating conditions and get:
+- Machine failure prediction
+- Anomaly detection
+- Model performance and maintenance insights
 
 ## Table of Contents
 1. [Project Overview](#1-project-overview)
