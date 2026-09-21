@@ -7,7 +7,7 @@
 [![Pytest](https://img.shields.io/badge/Pytest-9.1-yellow.svg)](https://docs.pytest.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-A portfolio-quality machine learning system built for **Data Science, Data Analytics, and ML** roles. Designed to monitor industrial milling equipment, predict catastrophic machine breakdowns before they occur, and detect subtle operational sensor drift using a dual-layer supervised/unsupervised machine learning architecture.
+An end-to-end machine learning system for predictive maintenance and anomaly detection using the AI4I 2020 dataset.”. Designed to monitor industrial milling equipment, predict catastrophic machine breakdowns before they occur, and detect subtle operational sensor drift using a dual-layer supervised/unsupervised machine learning architecture.
 
 Every metric, figure, and model result in this repository is dynamically derived from executing the complete pipeline against the verified **AI4I 2020 Predictive Maintenance Dataset**.
 
@@ -179,7 +179,7 @@ Rather than brute-force polynomial expansions, 4 features were engineered strict
 Three algorithms were implemented and systematically tuned:
 1. **Logistic Regression (Baseline):** Tested unweighted vs. balanced class-weighting. Demonstrates why accuracy alone fails under severe class imbalance.
 2. **Random Forest Classifier:** Tuned via Stratified 5-Fold Cross-Validation over `n_estimators`, `max_depth`, `min_samples_split`, and `class_weight`.
-3. **XGBoost Classifier:** Tuned via Stratified 5-Fold Cross-Validation over `scale_pos_weight` ($28.5$), `max_depth`, `learning_rate`, and `subsample`.
+3. **XGBoost Classifier**: Tuned via Stratified 5-Fold Cross-Validation over scale_pos_weight, max_depth, learning_rate, and subsample.
 
 ---
 
@@ -390,17 +390,3 @@ When translating this project to a live manufacturing facility:
 
 ---
 
-## 21.Technical Rationale Matrix
-
-Use this matrix to explain and defend every major technical design decision:
-
-| Technical Decision | What Was Done? | Why Was It Done? | Alternative Considered | Trade-Off & Risk Managed |
-| :--- | :--- | :--- | :--- | :--- |
-| **Target Leakage Prevention** | Quarantined `TWF`, `HDF`, `PWF`, `OSF`, and `RNF` from all feature matrices. | These flags represent the failure mode itself, occurring at the moment of breakdown. Supplying them creates $100\%$ target leakage. | Including them as intermediate multi-task targets. | Multi-task learning introduces training complexity without improving early predictive capability. |
-| **Identifier Removal** | Dropped `UDI` and `Product ID`. | High-cardinality unique keys cause tree models to memorize row order rather than learning physical mechanics. | Target-encoding `Product ID`. | High cardinality ($10,000$ unique IDs) causes severe overfitting with zero physical generalizability. |
-| **Stratified Splitting** | Enforced 80/20 stratified split on `Machine failure`. | Preserves the exact $3.39\%$ failure incidence in both train and test partitions under 28.5:1 imbalance. | Random unstratified split. | Random split introduces severe test variance (holdout could easily under-sample failures). |
-| **Metric Selection (F1 / PR-AUC)** | Selected winning model based on F1-Score ($0.8640$) and PR-AUC ($0.8869$) rather than Accuracy. | Accuracy is fatally misleading under class imbalance. Unweighted Logistic Regression reached $96.75\%$ accuracy while missing $82\%$ of failures. | Using ROC-AUC exclusively. | ROC-AUC can be overly optimistic under severe class imbalance because the False Positive Rate denominator is dominated by the large majority class. PR-AUC focuses directly on the minority class. |
-| **Domain Feature Engineering** | Derived $\Delta T$, Power ($P = \tau \omega$), and Overstrain ($\tau \times \text{wear}$) from first principles. | Physical failure modes (PWF, HDF, OSF) occur at non-linear boundaries that linear models and shallow trees cannot easily partition from raw axes. | Automated brute-force polynomial expansion ($x_i \cdot x_j$). | Polynomial features create high dimensionality, multicollinearity, and lack physical interpretability. |
-| **Model Selection (Random Forest vs XGBoost)** | Selected Random Forest as primary production model ($F1 = 0.8640$ vs XGBoost $0.8571$). | Random Forest achieved the highest F1-Score and fewest false alarms ($3$ vs $4$) with superior bagging stability. | Automatically selecting XGBoost by default. | Avoided assumption bias; selected model strictly based on empirical test performance and operational precision. |
-| **Unsupervised vs Supervised Decoupling** | Built Isolation Forest strictly without target labels. | Supervised models only detect known, historical failure patterns. Isolation Forest acts as an early-warning guardrail against novel operating regimes. | Using Isolation Forest to "predict failure". | Anomaly detection detects statistical outliers, not failure probability. Claiming it predicts failures confuses unsupervised outliers with supervised outcomes. |
-| **Dual Preprocessing Architecture** | Kept numerical features unscaled for tree models and scaled only for linear models. | Tree splits are invariant to monotonic scaling; unscaled features preserve native engineering units (rpm, Nm, K) for intuitive interpretation and debugging. | Scaling all features universally with `StandardScaler`. | Universal scaling destroys the direct physical interpretability of split thresholds in decision trees. |
